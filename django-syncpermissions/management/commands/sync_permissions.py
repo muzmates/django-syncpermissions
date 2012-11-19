@@ -1,6 +1,8 @@
+# -*- coding: UTF-8 -*-
 from django.core.management.base import BaseCommand
 from django.db.models import get_models, get_app
 from django.contrib.auth.management import create_permissions
+
 
 class Command(BaseCommand):
     args = '<app app ...>'
