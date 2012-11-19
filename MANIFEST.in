@@ -1,2 +1,2 @@
 include README.md
-recursive-include django-syncpermissions .py
+recursive-include django-syncpermissions/management *
