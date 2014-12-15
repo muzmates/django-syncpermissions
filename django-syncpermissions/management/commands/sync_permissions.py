@@ -2,20 +2,21 @@
 from django.core.management.base import BaseCommand
 from django.db.models import get_models, get_app
 from django.contrib.auth.management import create_permissions
-
+from django.apps import apps
 
 class Command(BaseCommand):
     args = '<app app ...>'
     help = 'Sync permissions for specified apps, or all apps if none specified'
 
     def handle(self, *args, **options):
+        _apps = []
+
         if not args:
-            apps = []
             for model in get_models():
-                apps.append(get_app(model._meta.app_label))
+                _apps.append(apps.get_app_config(model._meta.app_label))
         else:
-            apps = []
             for arg in args:
-                apps.append(get_app(arg))
-        for app in apps:
+                _apps.append(apps.get_app_config(arg))
+
+        for app in _apps:
             create_permissions(app, get_models(), options.get('verbosity', 0))
